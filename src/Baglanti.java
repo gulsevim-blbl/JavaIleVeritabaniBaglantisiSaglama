@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.PreparedStatement;
 
  
 public class Baglanti {
@@ -22,6 +23,49 @@ public class Baglanti {
     private Connection con = null;
     
     private Statement statement = null; //sql sorgusunu çalıştırmak için olan bir class
+    
+    private  PreparedStatement preparedStatement = null;
+    
+    public void preparedCalısanlariGetir( int id){
+        
+        String sorgu = "Select * from calisanlar where id > ? and ad like ?";
+        
+        try {
+            preparedStatement = con.prepareStatement(sorgu);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, "%m");
+            
+           ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {                
+                String  ad = rs.getString("ad");
+                String soyad = rs.getString("soyad");
+                String email = rs.getString("email");
+                
+                System.out.println(" Ad : " + ad + " Soyad : " + soyad + " email : " + email);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       /* try {
+            statement = con.createStatement();
+            
+            String sorgu =" Select * from calisanlar where ad like 'M%'";
+            
+            ResultSet rs = statement.executeQuery(sorgu);
+            
+            while (rs.next()) {                
+                
+                System.out.println("Ad :" + rs.getString("ad"));
+            
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+       
+    }
     
   public void calısanEkle(){
       
@@ -51,7 +95,7 @@ public class Baglanti {
             String sorgu = "Delete from calisanlar where id > 3";
             
            int deger = statement.executeUpdate(sorgu);
-            System.out.println(deger + "Kadar Veri Etkilendi...." );
+            System.out.println( deger + " Kadar Veri Etkilendi...." );
             
         } catch (SQLException ex) {
             Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,13 +183,16 @@ public class Baglanti {
         */
        
        Baglanti baglanti = new Baglanti();
-        System.out.println("Silinmeden Once..........");
+       /* System.out.println("Silinmeden Once..........");
         baglanti.calisanlariGetir();
         System.out.println("*************************");
         System.out.println("Silindikten Sonra");
         baglanti.calisanSil();
         baglanti.calisanlariGetir();
-        
+        */
+       baglanti.preparedCalısanlariGetir(1);
+       
+       
     }
     
     
