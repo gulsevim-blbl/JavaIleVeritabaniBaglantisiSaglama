@@ -40,14 +40,21 @@ public class Baglanti {
         } catch (SQLException ex) {
             Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
-      
-      
-      
-      
-      
+       
   }
- 
+    public  void calisanGuncelle() {
+        
+        try {
+            statement = con.createStatement();
+            
+            String sorgu = "Update calisanlar Set email = 'gulsevimblbl@gmail.com' where id = 1";
+            
+            statement.executeUpdate(sorgu);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void calisanlariGetir() {
         
@@ -97,12 +104,21 @@ public class Baglanti {
     }
     public static void main(String[] args) {
       
-        Baglanti baglanti = new Baglanti();
+      /*  Baglanti baglanti = new Baglanti();
         System.out.println("Eklenmeden Once...................");
         baglanti.calisanlariGetir();
         System.out.println("***********************************");
         baglanti.calısanEkle();
         baglanti.calisanlariGetir();
+        */
+        Baglanti baglanti = new Baglanti();
+        System.out.println("Guncellenmeden Once............");
+        baglanti.calisanlariGetir();
+        System.out.println("********************************");
+        System.out.println("Guncellendikten Sonra..........");
+        baglanti.calisanGuncelle();
+        baglanti.calisanlariGetir();
+        
         
     }
     
