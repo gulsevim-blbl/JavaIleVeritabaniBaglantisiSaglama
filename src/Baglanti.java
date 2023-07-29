@@ -23,12 +23,35 @@ public class Baglanti {
     
     private Statement statement = null; //sql sorgusunu çalıştırmak için olan bir class
     
-    
+  public void calısanEkle(){
+      
+        try {
+            statement = con.createStatement();
+            
+            String ad = "Semih";
+            String soyad = "Aktaş";
+            String email = "semihaktas@gmail.com";
+             //Insert Into calısanlar (ad,soyad,email) VALUES ('Yusuf', 'Cetinkaya', 'yusufcetinkaya@gmail.com')
+            String sorgu = "Insert Into calisanlar (ad,soyad,email) VALUES(" + "'" + ad + "'," + "'" + soyad + "'," + "'" + email + "')";
+            
+            statement.executeUpdate(sorgu);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      
+      
+      
+      
+      
+  }
  
     
     public void calisanlariGetir() {
         
-        String sorgu = "Select * From calisanlar where id > 2";
+        String sorgu = "Select * From calisanlar ";
       
         try {
             statement = con.createStatement();
@@ -73,11 +96,13 @@ public class Baglanti {
         
     }
     public static void main(String[] args) {
-        Baglanti baglanti = new Baglanti();
-        baglanti.calisanlariGetir();
-        
       
-        
+        Baglanti baglanti = new Baglanti();
+        System.out.println("Eklenmeden Once...................");
+        baglanti.calisanlariGetir();
+        System.out.println("***********************************");
+        baglanti.calısanEkle();
+        baglanti.calisanlariGetir();
         
     }
     
