@@ -42,6 +42,24 @@ public class Baglanti {
         }
        
   }
+  public void calisanSil(){
+      
+        try {
+            statement = con.createStatement();
+            
+            
+            String sorgu = "Delete from calisanlar where id > 3";
+            
+           int deger = statement.executeUpdate(sorgu);
+            System.out.println(deger + "Kadar Veri Etkilendi...." );
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      
+      
+  }
     public  void calisanGuncelle() {
         
         try {
@@ -111,14 +129,22 @@ public class Baglanti {
         baglanti.calısanEkle();
         baglanti.calisanlariGetir();
         */
-        Baglanti baglanti = new Baglanti();
+       /* Baglanti baglanti = new Baglanti();
         System.out.println("Guncellenmeden Once............");
         baglanti.calisanlariGetir();
         System.out.println("********************************");
         System.out.println("Guncellendikten Sonra..........");
         baglanti.calisanGuncelle();
         baglanti.calisanlariGetir();
-        
+        */
+       
+       Baglanti baglanti = new Baglanti();
+        System.out.println("Silinmeden Once..........");
+        baglanti.calisanlariGetir();
+        System.out.println("*************************");
+        System.out.println("Silindikten Sonra");
+        baglanti.calisanSil();
+        baglanti.calisanlariGetir();
         
     }
     
