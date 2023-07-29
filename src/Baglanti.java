@@ -1,7 +1,6 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,102 +21,14 @@ public class Baglanti {
     
     private Connection con = null;
     
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
+    private Statement statement = null; //sql sorgusunu çalıştırmak için olan bir class
     
-    public void preparedCalisanlariGetir(int id) {
-       
-       String sorgu = "Select * From calisanlar where id > ? and ad like ? ";
-       
-       
-        try {
-            preparedStatement = con.prepareStatement(sorgu);
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2,"M%");
-            
-            
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                String ad  = rs.getString("ad");
-                String soyad = rs.getString("soyad");
-                String email =  rs.getString("email");
-                
-                System.out.println("Ad : " + ad + " Soyad : " + soyad + " Email : " + email);
-                
-                
-                
-            }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-       
-       
-       
-        
-        
-    }
-    public void calisanEkle() {
-        
-        
-        
-        try {
-            statement = con.createStatement();
-            String ad = "Semih";
-            String soyad = "Aktaş";
-            String email =  "semihaktas@gmail.com";
-            // Insert Into calisanlar (ad,soyad,email) VALUES('Yusuf','Çetinkaya','mucahit@gmail.com')
-            String sorgu = "Insert Into calisanlar (ad,soyad,email) VALUES(" + "'" + ad + "'," + "'" + soyad + "'," + "'" + email + "')";
-            
-            statement.executeUpdate(sorgu);
-            
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }
     
-    public void calisanSil() {
-        
-        try {
-            statement = con.createStatement();
-            
-            String sorgu = "Delete from calisanlar where id > 3";
-            
-            int deger = statement.executeUpdate(sorgu);
-            System.out.println(deger + " kadar veri etkilendi...");
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }
-    public void calisanGuncelle() {
-        
-        
-        try {
-            statement = con.createStatement();
-            
-            String sorgu = "Update calisanlar Set email = 'example@gmail.com' where id > 3";
-            
-            statement.executeUpdate(sorgu);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Baglanti.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }
+ 
+    
     public void calisanlariGetir() {
         
-        String sorgu = "Select * From calisanlar";
+        String sorgu = "Select * From calisanlar where id > 2";
       
         try {
             statement = con.createStatement();
@@ -131,7 +42,7 @@ public class Baglanti {
                 String soyad = rs.getString("soyad");
                 String email = rs.getString("email");
                 
-                System.out.println("Id : " + id + "Ad: " + ad + "Soyad : " + soyad + " Email : " + email);
+                System.out.println(" Id : " + id + " Ad: " + ad + " Soyad : " + soyad + " Email : " + email);
                 
                 
             }
@@ -149,16 +60,7 @@ public class Baglanti {
         // "jbdc:mysql://localhost:3306/demo" 
         String url = "jdbc:mysql://" + host + ":" + port + "/" + db_ismi+ "?useUnicode=true&characterEncoding=utf8";
         
-        
-        try {
-            
-            Class.forName("com.mysql.jdbc.Driver");
-            
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver Bulunamadi....");
-        }
-        
-        
+         
         try {
             con = DriverManager.getConnection(url, kullanici_adi, parola);
             System.out.println("Baglanti Basarili...");
@@ -172,20 +74,9 @@ public class Baglanti {
     }
     public static void main(String[] args) {
         Baglanti baglanti = new Baglanti();
-        baglanti.preparedCalisanlariGetir(1);
-        
-        /*System.out.println("Silinmeden Önce........");
         baglanti.calisanlariGetir();
-        System.out.println("********************************************");
-        System.out.println("Silindikten Sonra........");
-        //baglanti.calisanGuncelle();
-        baglanti.calisanSil();*/
         
-       // baglanti.calisanlariGetir();
-        
-        //baglanti.calisanEkle();
-        //baglanti.calisanlariGetir();
-
+      
         
         
     }
